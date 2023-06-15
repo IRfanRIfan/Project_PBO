@@ -9,8 +9,8 @@ public class BattleShips {
     public static int[][] missedGuesses = new int[numRows][numCols];
 
     public static void main(String[] args) {
-        System.out.println("**** Welcome to Battle Ships game ****");
-        System.out.println("Right now, sea is empty\n");
+        System.out.println("**** Selamat Datang ****");
+        System.out.println("Lautan Masih Kosong\n");
 
         //Step 1 – Create the ocean map
         createOceanMap();
@@ -61,20 +61,20 @@ public class BattleShips {
     public static void deployPlayerShips() {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("\nDeploy your ships:");
+        System.out.println("\nMasukkan Kapal Mu:");
         //Deploying five ships for player
         BattleShips.playerShips = 5;
         for (int i = 1; i <= BattleShips.playerShips; ) {
-            System.out.print("Enter Y coordinate for your " + i + " ship: ");
+            System.out.print("Masukkan Kordinat Y Untuk Kapal ke " + i + " : ");
             int y = input.nextInt();
-            System.out.print("Enter X coordinate for your " + i + " ship: ");
+            System.out.print("Masukkan Kordinat X Untuk Kapal ke " + i + " : ");
             int x = input.nextInt();
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (grid[x][y].equals(" "))) {
                 grid[x][y] = "@";
                 i++;
             } else if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && grid[x][y].equals("@"))
-                System.out.println("You can't place two or more ships on the same location");
+                System.out.println("Kamu tidak bisa menyimpan kapal di tempat yang sama");
             else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))
                 System.out.println("You can't place ships outside the " + numRows + " by " + numCols + " grid");
         }
@@ -82,7 +82,7 @@ public class BattleShips {
     }
 
     public static void deployComputerShips() {
-        System.out.println("\nComputer is deploying ships");
+        System.out.println("\nComputer Memasukkan kapalnya");
         //Deploying five ships for computer
         BattleShips.computerShips = 5;
         for (int i = 1; i <= BattleShips.computerShips; ) {
@@ -91,7 +91,7 @@ public class BattleShips {
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols) && (grid[x][y].equals(" "))) {
                 grid[x][y] = "x";
-                System.out.println(i + ". ship DEPLOYED");
+                System.out.println(i + ". Kapal Dimasukkan");
                 i++;
             }
         }
@@ -107,33 +107,33 @@ public class BattleShips {
         printOceanMap();
 
         System.out.println();
-        System.out.println("Your ships: " + BattleShips.playerShips + " | Computer ships: " + BattleShips.computerShips);
+        System.out.println("KAPAL MU: " + BattleShips.playerShips + " | KAPAL COMPUTER: " + BattleShips.computerShips);
         System.out.println();
     }
 
     public static void playerTurn() {
-        System.out.println("\nYOUR TURN");
+        System.out.println("\nGILIRAN MU");
         int x = -1, y = -1;
         do {
             Scanner input = new Scanner(System.in);
-            System.out.print("Enter Y coordinate: ");
+            System.out.print("Masukkan Angka kordinat Y: ");
             y = input.nextInt();
-            System.out.print("Enter X coordinate: ");
+            System.out.print("Masukkan Angka kordinat X: ");
             x = input.nextInt();
 
             if ((x >= 0 && x < numRows) && (y >= 0 && y < numCols)) //valid guess
             {
                 if (grid[x][y].equals("x")) //if computer ship is already there; computer loses ship
                 {
-                    System.out.println("Boom! You sunk the ship!");
+                    System.out.println("BOOM! KAMU MELEDAKKAN KAPAL!");
                     grid[x][y] = "!"; //Hit mark
                     --BattleShips.computerShips;
                 } else if (grid[x][y].equals("@")) {
-                    System.out.println("Oh no, you sunk your own ship :(");
+                    System.out.println("OH TIDAK, KAPAL MU HANCUR :(");
                     grid[x][y] = "x";
                     --BattleShips.playerShips;
                 } else if (grid[x][y].equals(" ")) {
-                    System.out.println("Sorry, you missed");
+                    System.out.println("KAMU MELESET");
                     grid[x][y] = "-";
                 }
             } else if ((x < 0 || x >= numRows) || (y < 0 || y >= numCols))  //invalid guess
@@ -143,7 +143,7 @@ public class BattleShips {
 
 
     public static void computerTurn() {
-        System.out.println("\nCOMPUTER'S TURN");
+        System.out.println("\nGILIRAN COMPUTER");
         //Guess coordinates
         int x = -1, y = -1;
         do {
@@ -154,15 +154,15 @@ public class BattleShips {
             {
                 if (grid[x][y].equals("@")) //if player ship is already there; player loses ship
                 {
-                    System.out.println("The Computer sunk one of your ships!");
+                    System.out.println("COMPUTER MELEDAKKAN KAPALMU!");
                     grid[x][y] = "x";
                     --BattleShips.playerShips;
                     --BattleShips.computerShips; // Deduct one computer ship as penalty
                 } else if (grid[x][y].equals("x")) {
-                    System.out.println("The Computer sunk one of its own ships");
+                    System.out.println("COMPUTER MENEMBAK KAPALNYA SENDIRI!");
                     grid[x][y] = "!";
                 } else if (grid[x][y].equals(" ")) {
-                    System.out.println("Computer missed");
+                    System.out.println("COMPUTER MELESET");
                     if (missedGuesses[x][y] != 1) {
                         missedGuesses[x][y] = 1;
                     }
@@ -172,11 +172,11 @@ public class BattleShips {
     }
 
     public static void gameOver() {
-        System.out.println("Your ships: " + BattleShips.playerShips + " | Computer ships: " + BattleShips.computerShips);
+        System.out.println("KAPAL MU: " + BattleShips.playerShips + " | KAPAL COMPUTER: " + BattleShips.computerShips);
         if (BattleShips.playerShips > 0 && BattleShips.computerShips <= 0)
-            System.out.println("Hooray! You won the battle :)");
+            System.out.println("BOOYAH! KAMU MENANG :)");
         else
-            System.out.println("Sorry, you lost the battle");
+            System.out.println("BERLATIH LAGI, MASIH ADA KESEMPATAN LAIN!");
         System.out.println();
     }
 
